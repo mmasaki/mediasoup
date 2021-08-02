@@ -366,7 +366,7 @@ namespace RTC
 		int err;
 		const int family = Utils::IP::GetFamily(ip);
 		struct sockaddr_storage bindAddr; // NOLINT(cppcoreguidelines-pro-type-member-init)
-		int flags{ 0 };
+		int flags = UV_UDP_REUSEADDR;
 		uv_handle_t* uvHandle{ nullptr };
 		std::string transportStr;
 
@@ -472,6 +472,13 @@ namespace RTC
 		{
 			case Transport::UDP:
 			{
+				uv_os_fd_t fd;
+				uint32_t yes = 1;
+
+				if (uv_fileno(uvHandle, &fd) == 0) {
+					setsockopt(fd, SOL_SOCKET, SO_REUSEPORT, (char*)&yes, sizeof yes);
+				}
+
 				err = uv_udp_bind(
 				  reinterpret_cast<uv_udp_t*>(uvHandle),
 				  reinterpret_cast<const struct sockaddr*>(&bindAddr),
