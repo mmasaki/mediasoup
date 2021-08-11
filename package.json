@@ -1,5 +1,5 @@
 {
-  "name": "mediasoup",
+  "name": "@m-pipe/mediasoup",
   "version": "3.13.11",
   "description": "Cutting Edge WebRTC Video Conferencing",
   "contributors": [
@@ -11,7 +11,10 @@
   "homepage": "https://mediasoup.org",
   "repository": {
     "type": "git",
-    "url": "https://github.com/versatica/mediasoup.git"
+    "url": "git@github.com:m-pipe/mediasoup.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   },
   "funding": {
     "type": "opencollective",
